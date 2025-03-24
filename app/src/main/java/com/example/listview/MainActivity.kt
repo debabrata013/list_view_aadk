@@ -1,24 +1,24 @@
 package com.example.listview
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.listview.R
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
         val users = arrayOf(
-            "Python", "Java", "Kotlin", "C++", "JavaScript", "Ruby", "Swift", "Go", "Rust", "TypeScript",
-            "PHP", "C#", "Dart", "Perl", "Scala", "R", "Haskell", "Lua", "Objective-C", "F#",
-            "Elixir", "Clojure", "Groovy", "Shell", "SQL", "MATLAB", "Julia", "Erlang", "VB.NET", "COBOL"
+            "Python", "JavaScript", "Ruby", "Swift", "Go", "Rust", "TypeScript",
+            "Haskell", "Lua", "Objective-C", "F#", "SQL", "MATLAB", "Julia", "Erlang", "VB.NET", "COBOL"
         )
+
         val listView: ListView = findViewById(R.id.listView)
         val listAdapter: ArrayAdapter<String> = ArrayAdapter(
             this,
@@ -27,5 +27,15 @@ class MainActivity : AppCompatActivity() {
         )
 
         listView.adapter = listAdapter
+
+        // Find the button by ID
+        val btnNavigate = findViewById<Button>(R.id.button)
+
+        // Set click listener to navigate to AddUser activity
+        btnNavigate.setOnClickListener {
+            val intent = Intent(this, Adduser::class.java)
+            startActivity(intent)
+        }
+
     }
 }
