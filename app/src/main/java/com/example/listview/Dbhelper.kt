@@ -63,21 +63,21 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, VERS
         }
     }
 
-    // Get all users from the database
-    fun getAllUsers(): List<User> {
-        val userList = mutableListOf<User>()
-        readableDatabase.use { db ->
-            val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
-            cursor.use {
-                while (it.moveToNext()) {
-                    val id = it.getInt(it.getColumnIndexOrThrow(ID))
-                    val name = it.getString(it.getColumnIndexOrThrow(NAME))
-                    val dob = it.getString(it.getColumnIndexOrThrow(DOB))
-                    userList.add(User(id, name, dob))
-                }
-            }
+    fun getAllUsers(): List<Pair<String, String>> {
+        val usersList = mutableListOf<Pair<String, String>>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT $NAME, $DOB FROM $TABLE_NAME", null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val userName = cursor.getString(cursor.getColumnIndexOrThrow(NAME))
+                val userDob = cursor.getString(cursor.getColumnIndexOrThrow(DOB))
+                usersList.add(Pair(userName, userDob))
+            } while (cursor.moveToNext())
         }
-        return userList
+        cursor.close()
+        db.close()
+        return usersList
     }
 }
 

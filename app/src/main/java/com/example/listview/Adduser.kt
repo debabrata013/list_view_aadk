@@ -1,5 +1,6 @@
 package com.example.listview
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -44,7 +45,10 @@ class Adduser : AppCompatActivity() {
 
         // Back Button Click
         btnBack.setOnClickListener {
-            finish() // Closes current activity
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            //finish()
+        // Closes current activity
         }
     }
 

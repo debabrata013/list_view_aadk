@@ -7,23 +7,38 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.listview.R
+import com.example.listview.DbHelper as Dbhelper
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//
+//        val users = arrayOf(
+//            "Python", "JavaScript", "Ruby", "Swift", "Go", "Rust", "TypeScript",
+//            "Haskell", "Lua", "Objective-C", "F#", "SQL", "MATLAB", "Julia", "Erlang", "VB.NET", "COBOL"
+//        )
+//
+//        val listView: ListView = findViewById(R.id.listView)
+//        val listAdapter: ArrayAdapter<String> = ArrayAdapter(
+//            this,
+//            android.R.layout.simple_list_item_1,
+//            users
+//        )
+//
+//        listView.adapter = listAdapter
+        val dbHelper = Dbhelper(this)
+        val usersList = dbHelper.getAllUsers() // Fetch all users from database
 
-        val users = arrayOf(
-            "Python", "JavaScript", "Ruby", "Swift", "Go", "Rust", "TypeScript",
-            "Haskell", "Lua", "Objective-C", "F#", "SQL", "MATLAB", "Julia", "Erlang", "VB.NET", "COBOL"
-        )
+        // Convert user data to a display-friendly format
+        val displayList = usersList.map { "${it.first} - DOB: ${it.second}" }
 
         val listView: ListView = findViewById(R.id.listView)
         val listAdapter: ArrayAdapter<String> = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            users
+            displayList
         )
 
         listView.adapter = listAdapter
@@ -36,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Adduser::class.java)
             startActivity(intent)
         }
+
 
     }
 }
